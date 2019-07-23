@@ -1,24 +1,59 @@
+/**
+ * React Starter Kit (https://www.reactstarterkit.com/)
+ *
+ * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.txt file in the root directory of this source tree.
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import YouTube from 'react-youtube';
 import s from './YoutubePlayer.css';
 
 class YoutubePlayer extends React.Component {
   static propTypes = {
-    YTLInk: PropTypes.string
+    videoId: PropTypes.string
   };
 
   render() {
-      return(
-      <div>
-         <iframe id="ytplayer" type="text/html" width="640" height="360"
-            src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com"
-            frameBorder="0">
-
-        </iframe> 
+    const opts = {
+      height: '390',
+      width: '640',
+      playerVars: { // https://developers.google.com/youtube/player_parameters
+        autoplay: 1
+      }
+    };
+    return (
+      <div className={s.root}>
+        <div className={s.container}>
+        <YouTube
+        videoId={this.props.videoId}
+        opts={opts}
+        onReady={this._onReady}
+        onPlay={this._Play}
+        onPause={this._Pause}
+        />
+        </div>
       </div>
-      );
+    );
+  }
+  
+  _onReady(event) {
+    // access to player in all event handlers via event.target
+    event.target.pauseVideo();
+  }
+
+  _Play(event) {
+    console.log("play");
+  }
+
+  _Pause(event) {
+    event.target.pauseVideo();
+    console.log("pause");
   }
 }
 
-export default withStyles(s)(YoutubePlayer)
+export default withStyles(s)(YoutubePlayer);

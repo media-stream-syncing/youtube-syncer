@@ -10,8 +10,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import YouTube from 'react-youtube';
 import s from './Home.css';
-import YoutubePlayer from '../../components/YoutubePlayer';
+import YouTubePlayer from '../../components/YoutubePlayer';
+import YouTubeIdInput from '../../components/YoutubeIdInput';
 
 class Home extends React.Component {
   static propTypes = {
@@ -21,14 +23,18 @@ class Home extends React.Component {
         link: PropTypes.string.isRequired,
         content: PropTypes.string,
       }),
-    ).isRequired,
+    ).isRequired
   };
 
   render() {
+    
     return (
       <div className={s.root}>
         <div className={s.container}>
-          <YoutubePlayer></YoutubePlayer>
+          <YoutubeIdInput></YoutubeIdInput>
+          <YouTubePlayer
+          videoId="2g811Eo7K8U"
+          />
         </div>
       </div>
     );
