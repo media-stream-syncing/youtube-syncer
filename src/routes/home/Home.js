@@ -10,7 +10,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import YouTube from 'react-youtube';
 import s from './Home.css';
 import YouTubePlayer from '../../components/YoutubePlayer';
 import YouTubeIdInput from '../../components/YoutubeIdInput';
