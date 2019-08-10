@@ -12,8 +12,18 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Home.css';
 import YoutubePlayer from '../../components/YoutubePlayer';
+import { subscribeToTimer } from './io';
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    subscribeToTimer((err, timestamp) => this.setState({ 
+      timestamp 
+    }));
+  }
+  state = {
+    timestamp: 'no timestamp yet'
+  };
   static propTypes = {
     news: PropTypes.arrayOf(
       PropTypes.shape({
@@ -29,6 +39,7 @@ class Home extends React.Component {
       <div className={s.root}>
         <div className={s.container}>
           <YoutubePlayer></YoutubePlayer>
+        This is the timer value: {this.state.timestamp}
         </div>
       </div>
     );
