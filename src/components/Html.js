@@ -11,6 +11,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import serialize from 'serialize-javascript';
 import config from '../config';
+var io = require('socket.io');
 
 /* eslint-disable react/no-danger */
 
@@ -38,6 +39,7 @@ class Html extends React.Component {
     const { title, description, styles, scripts, app, children } = this.props;
     return (
       <html className="no-js" lang="en">
+        
         <head>
           <meta charSet="utf-8" />
           <meta httpEquiv="x-ua-compatible" content="ie=edge" />

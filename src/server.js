@@ -31,6 +31,7 @@ import schema from './data/schema';
 // import assets from './asset-manifest.json'; // eslint-disable-line import/no-unresolved
 import chunks from './chunk-manifest.json'; // eslint-disable-line import/no-unresolved
 import config from './config';
+var io = require('socket.io')();
 
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
@@ -194,6 +195,19 @@ app.get('*', async (req, res, next) => {
 const pe = new PrettyError();
 pe.skipNodeFiles();
 pe.skipPackage('express');
+
+//Setup Socket.IO
+io.on('connection', (client) => {
+  client.on('subscribeToTimer', (interval) => {
+    console.log('client is subscribing to timer with interval ', interval);
+    setInterval(() => {
+      client.emit('timer', new Date());
+    }, interval);
+  });
+});
+
+io.listen(3001);
+
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
