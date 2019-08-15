@@ -33,7 +33,7 @@ module.exports = {
   },
 
   // Database
-  databaseUrl: process.env.DATABASE_URL || 'sqlite:database.sqlite',
+  databaseUrl: process.env.DATABASE_URL || 'mongodb+srv://Leo:Gyb*YXt2adju?c4qRjmx@mediasyncing-w4ls7.mongodb.net/test?retryWrites=true&w=majority',
 
   // Web analytics
   analytics: {
@@ -47,9 +47,9 @@ module.exports = {
 
     // https://developers.facebook.com/
     facebook: {
-      id: process.env.FACEBOOK_APP_ID || '186244551745631',
+      id: process.env.FACEBOOK_APP_ID || '2862384550442542',
       secret:
-        process.env.FACEBOOK_APP_SECRET || 'a970ae3240ab4b9b8aae0f9f0661c6fc',
+        process.env.FACEBOOK_APP_SECRET || 'a667af84d783d9d88cbfd86dc131edd1',
     },
 
     // https://cloud.google.com/console/project

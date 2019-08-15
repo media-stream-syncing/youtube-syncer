@@ -14,9 +14,40 @@
  */
 
 import passport from 'passport';
-import { Strategy as FacebookStrategy } from 'passport-facebook';
+import { FacebookStrategy } from 'passport-facebook';
 import { User, UserLogin, UserClaim, UserProfile } from './data/models';
 import config from './config';
+
+var LocalStrategy = require('passport-local').Strategy;
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.getUserById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.getUserByUsername(username, function(err, user){
+      if(err) throw err;
+      if(!user){
+        return done(null, false, {message: 'Unknown User'});
+      }
+      User.comparePassword(password, user.password, function(err, isMatch){
+        if(err) throw err;
+     	if(isMatch){
+     	  return done(null, user);
+     	} else {
+     	  return done(null, false, {message: 'Invalid password'});
+     	}
+     });
+   });
+  }
+));
 
 /**
  * Sign in with Facebook.
@@ -45,7 +76,7 @@ passport.use(
         if (req.user) {
           const userLogin = await UserLogin.findOne({
             attributes: ['name', 'key'],
-            where: { name: loginName, key: profile.id },
+            where: { name: loginName, key:profile.id  },
           });
           if (userLogin) {
             // There is already a Facebook account that belongs to you.

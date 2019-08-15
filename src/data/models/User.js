@@ -1,37 +1,54 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
+const mongoose = require('mongoose');
+var bcrypt = require('bcryptjs');
 
-import DataType from 'sequelize';
-import Model from '../sequelize';
+const Schema = mongoose.Schema;
 
-const User = Model.define(
-  'User',
-  {
-    id: {
-      type: DataType.UUID,
-      defaultValue: DataType.UUIDV1,
-      primaryKey: true,
-    },
-    
-    email: {
-      type: DataType.STRING(255),
-      validate: { isEmail: true },
-    },
+const UserSchema = new Schema({
+  name: { type: String, default: '' },
+  email: { type: String, default: '' },
+  username: { type: String, default: '' },
+  provider: { type: String, default: '' },
+  password: { type: String, default: '' },
+  salt: { type: String, default: '' },
+  authToken: { type: String, default: '' }
+});
 
-    emailConfirmed: {
-      type: DataType.BOOLEAN,
-      defaultValue: false,
-    },
-  },
-  {
-    indexes: [{ fields: ['email'] }],
-  },
-);
+const validatePresenceOf = value => value && value.length;
 
-export default User;
+// Pre Save Hooks
+UserSchema.pre('save', function(next) {
+  if (!this.isNew) return next();
+
+  if (!validatePresenceOf(this.password) && !this.skipValidation()) {
+    next(new Error('Invalid password'));
+  } else {
+    next();
+  }
+});
+
+var User = module.exports = mongoose.model('User', UserSchema);
+
+module.exports.createUser = function(newUser, callback){
+  bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(newUser.password, salt, function(err, hash) {
+      newUser.password = hash;
+      newUser.save(callback);
+    });
+  });
+}
+
+module.exports.getUserByUsername = function(username, callback){
+  var query = {username: username};
+  User.findOne(query, callback);
+}
+
+module.exports.getUserById = function(id, callback){
+  User.findById(id, callback);
+}
+
+module.exports.comparePassword = function(candidatePassword, hash, callback){
+  bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
+    if(err) throw err;
+    callback(null, isMatch);
+  });
+}
