@@ -10,7 +10,13 @@ const UserSchema = new Schema({
   provider: { type: String, default: '' },
   password: { type: String, default: '' },
   salt: { type: String, default: '' },
-  authToken: { type: String, default: '' }
+  authToken: { type: String, default: '' , index:true },
+  facebook: {
+    id: String,
+    token: String,
+    email: String,
+    name: String
+  },
 });
 
 const validatePresenceOf = value => value && value.length;

@@ -91,14 +91,14 @@ app.get(
   '/login/facebook',
   passport.authenticate('facebook', {
     scope: ['email', 'user_location'],
-    session: false,
+    session: true,
   }),
 );
 app.get(
   '/login/facebook/return',
   passport.authenticate('facebook', {
     failureRedirect: '/login',
-    session: false,
+    session: true,
   }),
   (req, res) => {
     const expiresIn = 60 * 60 * 24 * 180; // 180 days
@@ -143,7 +143,24 @@ app.post('/register', function(req, res){
   }
 });
 
-app.listen(3000, () => console.log('App listening on port 3000!'))
+// Endpoint to login
+app.post('/login',
+  passport.authenticate('local'),
+  function(req, res) {
+    res.send(req.user);
+  }
+);
+
+// Endpoint to get current user
+app.get('/user', function(req, res){
+  res.send(req.user);
+})
+
+// Endpoint to logout
+app.get('/logout', function(req, res){
+  req.logout();
+  res.send(null)
+});
 
 //
 // Register server-side rendering middleware
@@ -251,19 +268,29 @@ app.use((err, req, res, next) => {
   res.send(`<!doctype html>${html}`);
 });
 
-// Connect to Mongo
-connect();
-
 //
 // Launch the server
 // -----------------------------------------------------------------------------
-const promise = models.sync().catch(err => console.error(err.stack));
-if (!module.hot) {
-  promise.then(() => {
+// const promise = models.sync().catch(err => console.error(err.stack));
+// if (!module.hot) {
+//   promise.then(() => {
+//     app.listen(config.port, () => {
+//       console.info(`The server is running at http://localhost:${config.port}/`);
+//     });
+//   });
+// }
+
+// Connect to Mongo
+connect();
+
+function listen() {
+  if (app.get('env') === 'test') return;
+  if (!module.hot) {
     app.listen(config.port, () => {
       console.info(`The server is running at http://localhost:${config.port}/`);
-    });
-  });
+    })
+  }
+  console.log('Express app started on port ' + config.port);
 }
 
 function connect() {
