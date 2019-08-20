@@ -1,14 +1,4 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 /* eslint-disable max-len */
-
 if (process.env.BROWSER) {
   throw new Error(
     'Do not import `config.js` from inside the client-side code.',
@@ -33,7 +23,7 @@ module.exports = {
   },
 
   // Database
-  databaseUrl: process.env.DATABASE_URL || 'mongodb+srv://Leo:Gyb*YXt2adju?c4qRjmx@mediasyncing-w4ls7.mongodb.net/test?retryWrites=true&w=majority',
+  databaseUrl: process.env.DATABASE_URL || 'mongodb+srv://Leo:RHGm306LlGNgUOZ2@mediasyncing-w4ls7.mongodb.net/test?retryWrites=true&w=majority',
 
   // Web analytics
   analytics: {

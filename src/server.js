@@ -1,12 +1,3 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 import path from 'path';
 import express from 'express';
 import cookieParser from 'cookie-parser';
@@ -268,36 +259,35 @@ app.use((err, req, res, next) => {
   res.send(`<!doctype html>${html}`);
 });
 
+
 //
 // Launch the server
 // -----------------------------------------------------------------------------
-// const promise = models.sync().catch(err => console.error(err.stack));
-// if (!module.hot) {
-//   promise.then(() => {
-//     app.listen(config.port, () => {
-//       console.info(`The server is running at http://localhost:${config.port}/`);
-//     });
-//   });
-// }
-
-// Connect to Mongo
-connect();
-
-function listen() {
-  if (app.get('env') === 'test') return;
-  if (!module.hot) {
+//const promise = models.sync().catch(err => console.error(err.stack));
+if (!module.hot) {
+    promise.then(() => {
     app.listen(config.port, () => {
       console.info(`The server is running at http://localhost:${config.port}/`);
-    })
-  }
-  console.log('Express app started on port ' + config.port);
+    });
+  });
+}
+
+// Connect to Mongo
+mongoose.connect(config.databaseUrl, { keepAlive: 1, useNewUrlParser: true });
+mongoose.connection.on('error', () => {
+  throw new Error(`unable to connect to database: ${config.databaseUrl}`);
+})
+.on('disconnected', connect);
+
+if (!module.hot) {
+  promise.then(() => {
+   app.listen(config.port, () => {
+     console.info(`The server is running at http://localhost:${config.port}/`);
+   });
+ });
 }
 
 function connect() {
-  mongoose.connection
-    .on('error', console.log)
-    .on('disconnected', connect)
-    .once('open', listen);
   return mongoose.connect(config.databaseUrl, { keepAlive: 1, useNewUrlParser: true });
 }
 
