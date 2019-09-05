@@ -25,13 +25,7 @@ class Home extends React.Component {
     timestamp: 'no timestamp yet'
   };
   static propTypes = {
-    news: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        link: PropTypes.string.isRequired,
-        content: PropTypes.string,
-      }),
-    ).isRequired,
+   
   };
 
   render() {

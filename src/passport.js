@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
-import { User, UserLogin, UserClaim, UserProfile } from './data/models';
 import config from './config';
+const User = require('./data/models/User');
 
 var LocalStrategy = require('passport-local').Strategy;
 

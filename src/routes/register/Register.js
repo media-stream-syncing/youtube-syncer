@@ -39,72 +39,76 @@ function Register({
   onPwChange
 }) {
   const classes = useStyles();
+  let pwstor = {
+    'width': '63%',
+    'text-align': 'inline',
+    'margin': 'auto',
+    'padding': '0',
+    'font-size': '12px'
+  };
   return (
     <div className={s.root}>
-      <div className={s.container}>
-        <div className="loginBox">
+        <div className={s.container}>
+        <div className="loginBox" style={{'textAlign':'center'}}>
           <h1>Sign Up</h1>
           {errors.message && <p style={{ color: "red" }}>{errors.message}</p>}
 
           <form onSubmit={onSubmit}>
+          <div style={{'textAlign':'center'}}>
           <TextField
             name="username"
-            floatingLabelText="user name"
+            label="username"
             value={user.username}
             onChange={onChange}
-            errorText={errors.username}
           />
+          </div>
+          <div style={{'textAlign':'center'}}> 
           <TextField
             name="email"
-            floatingLabelText="email"
+            label="email"
             value={user.email}
             onChange={onChange}
-            errorText={errors.email}
           />
+          </div>
           <TextField
             type={type}
             name="password"
-            floatingLabelText="password"
+            label="password"
             value={user.password}
             onChange={onPwChange}
-            errorText={errors.password}
           />
         <div className="pwStrRow">
           {score >= 1 && (
             <div>
-              <PasswordStr score={score} /> 
+              <PasswordStr score={score} style={pwstor}/> 
               <Button 
                 className="pwShowHideBtn" 
                 label={btnTxt} onClick={pwMask} 
                 style={{position: 'relative', left: '50%', transform: 'translateX(-50%)'}} 
-              />
+              > show</Button>
             </div>
             )} 
         </div>
         <TextField
           type={type}
           name="pwconfirm"
-          floatingLabelText="confirm password"
+          label="confirm password"
           value={user.pwconfirm}
           onChange={onChange}
-          errorText={errors.pwconfirm}
         />
         <br />
         <Button
           className="signUpSubmit"
-          primary={true}
+          primary="true"
           type="submit"
           label="submit"
-        />
+        >submit</Button>
       </form>
-      <p>
-        Aleady have an account? <br />
-        <a href="/">Log in here</a>
-      </p>
+      
+    </div>
+    </div>
     </div>
         
-      </div>
-    </div>
   );
 }
 

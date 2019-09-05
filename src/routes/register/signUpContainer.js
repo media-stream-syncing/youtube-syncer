@@ -67,7 +67,7 @@ class SignUpContainer extends Component {
   submitSignup(user) {
     var params = { username: user.usr, password: user.pw, email: user.email };
     axios
-      .post("https://ouramazingserver.com/api/signup/submit", params)
+      .post("http://localhost:3000/register", params)
       .then(res => {
         if (res.data.success === true) {
           localStorage.token = res.data.token;
@@ -82,6 +82,7 @@ class SignUpContainer extends Component {
       .catch(err => {
         console.log("Sign up data submit error: ", err);
       });
+      console.log("sent post");
   }
 
   validateForm(event) {

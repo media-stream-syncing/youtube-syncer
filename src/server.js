@@ -78,6 +78,22 @@ app.use((err, req, res, next) => {
 
 app.use(passport.initialize());
 
+// Register User
+app.post('/register',
+ function(req, res){
+  var newUser = new User({
+    name: req.body.name,
+    email: req.body.email,
+    username: req.body.username,
+    password: req.body.password
+  });
+
+  User.createUser(newUser, function(err, user){
+    if(err) throw err;
+    res.send(user).end();
+  });
+});
+
 app.get(
   '/login/facebook',
   passport.authenticate('facebook', {
@@ -112,31 +128,11 @@ app.use(
   })),
 );
 
-// Register User
-app.post('/register', function(req, res){
-  var password = req.body.password;
-  var password2 = req.body.password2;
-
-  if (password == password2){
-    var newUser = new User({
-      name: req.body.name,
-      email: req.body.email,
-      username: req.body.username,
-      password: req.body.password
-    });
-
-    User.createUser(newUser, function(err, user){
-      if(err) throw err;
-      res.send(user).end()
-    });
-  } else{
-    res.status(500).send("{errors: \"Passwords don't match\"}").end()
-  }
-});
-
 // Endpoint to login
 app.post('/login',
-  passport.authenticate('local'),
+  passport.authenticate('local', 
+  { successRedirect: '/',
+  failureRedirect: '/login'}),
   function(req, res) {
     res.send(req.user);
   }

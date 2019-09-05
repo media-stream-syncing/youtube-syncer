@@ -10,7 +10,9 @@ function action() {
     title,
     component: (
       <Layout>
+        <div id="root">
         <SignUpContainer title={title} />
+        </div>
       </Layout>
     ),
   };
