@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { rootClass, containerClass } from './Home.css';
-import YoutubePlayerManager from '../../../src/components/Youtube/YoutubePlayerManager/YoutubeManager';
+import YoutubePlayerManager from '../../components/Youtube/YoutubePlayerManager/YoutubeManager';
 
 class Home extends Component {
   static propTypes = {

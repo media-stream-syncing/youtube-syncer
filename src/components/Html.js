@@ -50,7 +50,10 @@ class Html extends React.Component {
           <link rel="manifest" href="/site.webmanifest" />
           <link rel="apple-touch-icon" href="/icon.png" />
 
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+          />
           {styles.map(style => (
             <style
               key={style.id}
@@ -72,9 +75,7 @@ class Html extends React.Component {
               dangerouslySetInnerHTML={{
                 __html:
                   'window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;' +
-                  `ga('create','${
-                    config.analytics.googleTrackingId
-                  }','auto');ga('send','pageview')`,
+                  `ga('create','${config.analytics.googleTrackingId}','auto');ga('send','pageview')`,
               }}
             />
           )}

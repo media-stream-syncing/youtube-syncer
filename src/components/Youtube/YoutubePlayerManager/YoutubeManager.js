@@ -10,14 +10,15 @@ class YoutubePlayerManager extends Component {
   state = { videoList: null, selectedVideo: null };
 
   // Fetch Videos based on Search term
-  onSearchSubmit =  term => {
-    const response = youtubeApi.get('/search', {
-      params: {
-        q: term,
-      },
-    })
-      .then(res =>console.log(res))
-      .catch(err => console.log(err))
+  onSearchSubmit = term => {
+    const response = youtubeApi
+      .get('/search', {
+        params: {
+          q: term,
+        },
+      })
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
 
     // this.setState({ videoList: response.data.iterm});
     // this.setState({ videoList: response.data.iterm});
@@ -27,7 +28,7 @@ class YoutubePlayerManager extends Component {
   };
 
   onVideoSelect = video => {
-    this.setState({selectedVideo: video});
+    this.setState({ selectedVideo: video });
   };
 
   render() {
