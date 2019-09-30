@@ -10,6 +10,9 @@
 import path from 'path';
 import cp from 'child_process';
 import webpackConfig from './webpack.config';
+// import socketIO from 'socket.io';
+import { isObject } from 'util';
+
 
 // Should match the text string used in `src/server.js/server.listen(...)`
 const RUNNING_REGEXP = /The server is running at http:\/\/(.*?)\//;
@@ -62,6 +65,17 @@ function runServer() {
 
     server.stdout.on('data', onStdOut);
     server.stderr.on('data', x => process.stderr.write(x));
+
+    // const io = socketIO(server);
+
+    // io.on('connection', socket => {
+    //   console.log('User Connected');
+      
+    //   socket.on('disconnect', () => {
+    //     console.log('user disconnect');
+    //   });
+
+    // });
 
     return server;
   });

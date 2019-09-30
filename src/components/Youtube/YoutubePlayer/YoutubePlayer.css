@@ -7,7 +7,7 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-@import '../variables.css';
+@import '../../variables.css';
 
 .root {
   background: #333;
@@ -44,4 +44,9 @@
 
 .link:hover {
   color: rgba(255, 255, 255, 1);
+}
+
+.player {
+  width: 100%;
+  height: auto;
 }

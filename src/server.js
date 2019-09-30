@@ -9,6 +9,7 @@
 
 import path from 'path';
 import express from 'express';
+// import socketIO from 'socket-io';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import expressJwt, { UnauthorizedError as Jwt401Error } from 'express-jwt';
@@ -28,7 +29,7 @@ import passport from './passport';
 import router from './router';
 import models from './data/models';
 import schema from './data/schema';
-// import assets from './asset-manifest.json'; // eslint-disable-line import/no-unresolved
+import assets from './asset-manifest.json'; // eslint-disable-line import/no-unresolved
 import chunks from './chunk-manifest.json'; // eslint-disable-line import/no-unresolved
 import config from './config';
 
