@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const KEY = 'AIzaSyAXcNM7O0Ifc0KnHihSzZoFKO1dBI-Hzsc';
+const KEY = 'AIzaSyBoTvIBD-2vU7gDgCtUaGdNFUGZmrp0uRU';
 const MAXVIDEORESULT = 5;
 
 export default axios.create({

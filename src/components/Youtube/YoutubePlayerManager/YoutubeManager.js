@@ -4,24 +4,24 @@ import youtubeApi from '../../Apis/youtube';
 import YoutubePlayer from '../YoutubePlayer/YoutubePlayer';
 // import youtubeParams form '../../Apis/youtube'
 // import YoutubePlayer from '../YoutubePlayer/YoutubePlayer';
+var youtubeApiClient = require('request-promise');
+const KEY = 'AIzaSyBoTvIBD-2vU7gDgCtUaGdNFUGZmrp0uRU';
+const MAXVIDEORESULT = 5;
+
 
 class YoutubePlayerManager extends Component {
+
   // {/* <YoutubePlayer videoId="R0ykLlhg0AQ" /> */}
   state = { videoList: null, selectedVideo: null };
 
   // Fetch Videos based on Search term
   onSearchSubmit = term => {
-    const response = youtubeApi
-      .get('/search', {
-        params: {
-          q: term,
-        },
-      })
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
-
-    // this.setState({ videoList: response.data.iterm});
-    // this.setState({ videoList: response.data.iterm});
+    var options = {
+      uri: `https://www.googleapis.com/youtube/v3/search?part=snippet&key=${KEY}&maxResult=${MAXVIDEORESULT}&q=${term}`,
+      json: true
+    }
+    youtubeApiClient(options)
+    .then(res => console.log(res))
 
     // Temp;
     this.onVideoSelect(videoObject);

@@ -39,6 +39,7 @@
     "react-dom": "^16.5.2",
     "react-redux": "^6.0.1",
     "react-youtube": "^7.9.0",
+    "request-promise": "^4.2.4",
     "sequelize": "^4.38.1",
     "serialize-javascript": "^1.5.0",
     "socket.io": "^2.3.0",
