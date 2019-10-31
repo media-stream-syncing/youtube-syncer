@@ -1,51 +1,36 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import SearchBar from '../SearchBar.js/SearchBar';
 import youtubeApi from '../../Apis/youtube';
 import YoutubePlayer from '../YoutubePlayer/YoutubePlayer';
+import useDataApi from '../useDataApi.js';
 // import youtubeParams form '../../Apis/youtube'
 // import YoutubePlayer from '../YoutubePlayer/YoutubePlayer';
-var youtubeApiClient = require('request-promise');
+const youtubeApiClient = require('request-promise');
+
 const KEY = 'AIzaSyBoTvIBD-2vU7gDgCtUaGdNFUGZmrp0uRU';
 const MAXVIDEORESULT = 5;
 
-
-class YoutubePlayerManager extends Component {
-
+function YoutubePlayerManager() {
   // {/* <YoutubePlayer videoId="R0ykLlhg0AQ" /> */}
-  state = { videoList: null, selectedVideo: null };
-
-  // Fetch Videos based on Search term
-  onSearchSubmit = term => {
-    var options = {
-      uri: `https://www.googleapis.com/youtube/v3/search?part=snippet&key=${KEY}&maxResult=${MAXVIDEORESULT}&q=${term}`,
-      json: true
-    }
-    youtubeApiClient(options)
-    .then(res => console.log(res))
-
-    // Temp;
-    this.onVideoSelect(videoObject);
+  let videoPractice = {
+    title: `SiR - D'Evils`,
+    description: 'slow motion',
+    videoId: 'txZVJ24UVUs',
   };
 
-  onVideoSelect = video => {
-    this.setState({ selectedVideo: video });
-  };
+  const [{ data, isLoading, isError }, doFetch] = useDataApi(
+    `https://www.googleapis.com/youtube/v3/search?part=snippet&key=${KEY}&maxResult=${MAXVIDEORESULT}&q=kendrick`,
+    { hits: [] },
+  );
 
-  render() {
-    return (
-      <div>
-        <div className="ui container">
-          <SearchBar onFormSubmit={this.onSearchSubmit} />
-          <YoutubePlayer video={this.state.selectedVideo} />
-        </div>
+  return (
+    <div>
+      <div className="ui container">
+        <SearchBar onFormSubmit={term => doFetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${KEY}&maxResult=${MAXVIDEORESULT}&q=${term}`,)} />
+        <YoutubePlayer video={data.items} />
       </div>
-    );
-  }
+    </div>
+  );
 }
-const videoObject = {
-  title: `SiR - D'Evils`,
-  description: 'slow motion',
-  videoId: 'txZVJ24UVUs',
-};
 
 export default YoutubePlayerManager;
