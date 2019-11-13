@@ -26,7 +26,7 @@ function YoutubePlayerManager() {
   return (
     <div>
       <div className="ui container">
-        <SearchBar onFormSubmit={term => doFetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${KEY}&maxResult=${MAXVIDEORESULT}&q=${term}`,)} />
+        <SearchBar onFormSubmit={term => doFetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${KEY}&maxResult=${MAXVIDEORESULT}&q=${term}`)} />
         <YoutubePlayer video={data.items} />
       </div>
     </div>
